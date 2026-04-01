@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HKO Moodle Lesson Template — Modern Gamified ESL</title>
+  <style>
+    :root{
+      --bg:#f4f7fb;
+      --paper:#ffffff;
+      --card:#ffffff;
+      --ink:#24313a;
+      --muted:#5f6c76;
+      --line:#d7dee4;
+      --orange:#d46a1f;
+      --copper:#b85a18;
+      --blue:#28597a;
+      --teal:#1f7a74;
+      --green:#2e8b57;
+      --gold:#ffffff;
+      --berry:#b4476a;
+      --sand:#f4f7fb;
+      --powder:#edf4f8;
+      --shadow:0 12px 28px rgba(32,45,58,.08);
+      --radius:20px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter, Aptos, "Segoe UI", Arial, sans-serif;
+      color:var(--ink);
+      background:linear-gradient(180deg,#f4f7fb 0%, #e9f0f7 100%);
+      line-height:1.5;
+    }
+    img{max-width:100%;display:block;border-radius:18px}
+    button,select,textarea,input{font:inherit}
+    .shell{max-width:1320px;margin:0 auto;padding:18px 18px 80px}
+    .topbar{
+      position:sticky;top:0;z-index:100;
+      display:flex;align-items:center;justify-content:space-between;gap:16px;
+      padding:12px 14px;margin-bottom:18px;
+      border:1px solid rgba(215,222,228,.95);
+      border-radius:18px;background:rgba(251,248,242,.92);backdrop-filter:blur(10px);
+      box-shadow:var(--shadow);
+    }
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{
+      width:42px;height:42px;border-radius:13px;display:grid;place-items:center;
+      background:linear-gradient(135deg,var(--blue),var(--green));
+      color:#fff;font-weight:800
+    }
+    .brand h1{margin:0;font-size:1rem;line-height:1.1}
+    .brand p{margin:2px 0 0;color:var(--muted);font-size:.82rem}
+    .top-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .pill,.progress-pill{padding:9px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:.84rem;font-weight:800;color:var(--blue)}
+    .hero,.slide{display:grid;gap:18px}
+    .hero{grid-template-columns:1.1fr .9fr;margin-bottom:18px}
+    .hero-card,.overview-card,.slide,.footer-card{
+      background:var(--paper);border:1px solid rgba(215,222,228,.95);border-radius:var(--radius);box-shadow:var(--shadow)
+    }
+    .hero-card{padding:28px}
+    .hero-photo{padding:10px}
+    .hero-photo img{height:100%;min-height:380px;object-fit:cover}
+    .eyebrow{display:inline-block;padding:6px 10px;border-radius:999px;background:#fff0e5;color:var(--orange);font-size:.78rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+    .hero h2{margin:14px 0 10px;font-size:2.1rem;line-height:1.05;color:var(--green)}
+    .hero p{margin:0;max-width:62ch;color:#4c5862}
+    .hero-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px}
+    .mini-stat{padding:14px;border-radius:16px;background:#fff;border:1px solid var(--line)}
+    .mini-stat strong{display:block;font-size:1.08rem}
+    .overview-card{padding:20px;margin-bottom:18px}
+    .overview-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .overview-item{padding:16px;background:#fff;border:1px solid var(--line);border-radius:16px}
+    .overview-item h3{margin:0 0 6px;font-size:.96rem}
+    .overview-item p{margin:0;color:var(--muted);font-size:.92rem}
+    .nav-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:14px}
+    .nav-grid a{display:block;padding:10px 8px;text-align:center;text-decoration:none;color:var(--ink);font-size:.82rem;font-weight:800;border-radius:12px;background:#fff;border:1px solid var(--line)}
+    .slide{grid-template-columns:300px 1fr;padding:18px;margin-bottom:18px;scroll-margin-top:90px}
+    .slide-side{display:flex;flex-direction:column;gap:12px}
+    .stage-tag{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:var(--powder);color:var(--blue);font-weight:800;font-size:.82rem}
+    .slide-side h3{margin:0;font-size:1.48rem;line-height:1.08;color:var(--blue)}
+    .slide-side p{margin:0;color:var(--muted)}
+    .subline{font-size:.87rem;color:var(--blue);font-weight:700}
+    .chip-row{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{padding:8px 10px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:.8rem;font-weight:700}
+    .audio-box,.record-box,.translation-box,.template-callout{padding:14px;border-radius:16px;background:#fff;border:1px solid var(--line)}
+    .translation-box{background:#ffffff;border-color:#d7dee4;color:#24313a}
+    .slide-main{display:grid;gap:14px}
+    .visual{display:grid;grid-template-columns:1.12fr .88fr;gap:14px}
+    .image-card,.activity-card,.game-card,.note-card,.score-card,.feedback-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px}
+    .image-card img{aspect-ratio:16/10;object-fit:cover}
+    .caption,.small{color:var(--muted);font-size:.88rem}
+    .activity-grid.two{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .activity-grid.three{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .activity-grid.four{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .activity-card h4,.game-card h4,.note-card h4,.feedback-card h4,.score-card h4{margin:0 0 10px;font-size:1rem;color:var(--blue)}
+    .task-list{margin:0;padding-left:18px}
+    .task-list li{margin:7px 0}
+    .pill-bank{display:flex;gap:8px;flex-wrap:wrap}
+    .word-pill,.answer-pill,.token{padding:10px 12px;border-radius:12px;background:#f6f8fa;border:1px solid var(--line);font-weight:700}
+    .match-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .match-item{padding:12px;border-radius:14px;background:#f1f6fb;border:1px solid #d7e2ee}
+    .choice-list{display:grid;gap:10px}
+    .choice{padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:#fbfcfd}
+    .choice.correct{background:#effaf3;border-color:#b8dfc3}
+    .choice.warning{background:#fff7e9;border-color:#efd5a0}
+    .choice.alt{background:#eff5fb;border-color:#cfe0f0}
+    .sentence-frame{padding:14px;border-left:5px solid var(--orange);background:#fff3e8;border-radius:14px}
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .board{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .tile{min-height:84px;padding:14px;border-radius:16px;border:1px solid var(--line);background:#fbfcfe;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:700}
+    .timer,.xp-track,.achievement,.record-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;border-radius:16px;background:#f7fafc;border:1px solid var(--line)}
+    .achievement strong{color:var(--berry)}
+    .btn-row{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{
+      border:none;border-radius:12px;padding:10px 14px;font-weight:800;cursor:pointer;
+      background:var(--blue);color:#fff
+    }
+    .btn.alt{background:var(--orange)}
+    .btn.soft{background:#eef4f8;color:var(--blue);border:1px solid #d3e0ea}
+    .btn.green{background:var(--green)}
+    .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+    .controls{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:8px}
+    .dropdown-wrap{display:grid;gap:8px}
+    details.suggested{border:1px dashed #d7dee4;border-radius:14px;padding:10px 12px;background:#ffffff}
+    details.suggested summary{cursor:pointer;font-weight:800;color:#8a6220}
+    .rubric{display:grid;gap:8px}
+    .rubric-row{display:grid;grid-template-columns:120px 1fr;gap:10px;align-items:start}
+    .rubric-row b{padding:8px 10px;border-radius:12px;background:#eff6f5;color:var(--teal)}
+    .footer-card{padding:20px}
+    @media (max-width:1120px){
+      .hero,.slide,.visual,.split{grid-template-columns:1fr}
+      .hero-grid,.overview-grid{grid-template-columns:repeat(2,1fr)}
+      .nav-grid{grid-template-columns:repeat(4,1fr)}
+    }
+    @media (max-width:760px){
+      .shell{padding:12px 12px 48px}
+      .topbar{display:block}
+      .top-actions{margin-top:10px}
+      .hero-grid,.overview-grid,.nav-grid,.activity-grid.two,.activity-grid.three,.activity-grid.four,.match-grid,.board{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">HK</div>
+        <div>
+          <h1>HKO Moodle Lesson Template</h1>
+          <p>Modern, light, flexible, game-rich • 14 stages • Moodle-ready</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <div class="pill">XP 180</div>
+        <div class="pill">2 badges unlocked</div>
+        <div class="progress-pill">Progress 36%</div>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-card">
+        <span class="eyebrow">Template + visual reference</span>
+        <h2>Fresh Moodle lesson layout with guided flow, stronger cognition, and cleaner game balance</h2>
+        <p>This version keeps the structure and activity rhythm, tones down the visual sugar rush, and shifts the later stages into more thoughtful production. Vocabulary ends in spoken production. Grammar ends in guided writing. Instructions include Spanish support, speaking tasks include recording and feedback zones, and free production tasks include a suggested-answer dropdown.</p>
+        <div class="hero-grid">
+          <div class="mini-stat"><strong>14</strong><span>stages total</span></div>
+          <div class="mini-stat"><strong>2–4</strong><span>activity blocks max</span></div>
+          <div class="mini-stat"><strong>Light</strong><span>no dark screens</span></div>
+          <div class="mini-stat"><strong>Interactive</strong><span>randomize + retry + save</span></div>
+        </div>
+      </div>
+      <div class="hero-card hero-photo">
+        <img src="https://images.pexels.com/photos/1181359/pexels-photo-1181359.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Bright professional team meeting in a modern office" />
+      </div>
+    </section>
+
+    <section class="overview-card">
+      <div class="overview-grid">
+        <div class="overview-item"><h3>Lesson title</h3><p>Working Together at the Office</p></div>
+        <div class="overview-item"><h3>Target level</h3><p>A1–A2 shell for adaptation</p></div>
+        <div class="overview-item"><h3>Theme</h3><p>Daily routines, teamwork, office tasks</p></div>
+        <div class="overview-item"><h3>Core promise</h3><p>Guided progression, fewer gimmicks, stronger payoff</p></div>
+      </div>
+      <div class="nav-grid">
+        <a href="#v1">V1</a><a href="#v2">V2</a><a href="#v3">V3</a><a href="#v4">V4</a><a href="#v5">V5</a><a href="#v6">V6</a><a href="#v7">V7</a>
+        <a href="#g1">G1</a><a href="#g2">G2</a><a href="#g3">G3</a><a href="#g4">G4</a><a href="#g5">G5</a><a href="#g6">G6</a><a href="#g7">G7</a>
+      </div>
+    </section>
+
+    <section class="slide" id="v1">
+      <aside class="slide-side">
+        <div class="stage-tag">Vocabulary • Stage 1</div>
+        <h3>See the Scene</h3>
+        <p>Open with a real image and quick noticing prompts.</p>
+        <div class="translation-box"><strong>ES:</strong> Mira la imagen y responde con palabras cortas o frases simples.</div>
+        <div class="audio-box"><button class="btn alt">Audio placeholder • scene model</button></div>
+      </aside>
+      <div class="slide-main">
+        <div class="visual">
+          <div class="image-card">
+            <img src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Team members talking around a desk in a bright office" />
+            <div class="caption">Use real, clean workplace photography. Keep one image doing one clear job.</div>
+          </div>
+          <div class="activity-card">
+            <h4>Talk starters</h4>
+            <ul class="task-list">
+              <li>What can you see?</li>
+              <li>Who is working together?</li>
+              <li>What objects can you name?</li>
+            </ul>
+            <div class="translation-box" style="margin-top:12px"><strong>ES:</strong> ¿Qué ves? ¿Quiénes trabajan juntos? ¿Qué objetos puedes nombrar?</div>
+            <div class="controls"><div class="btn-row"><button class="btn ghost">Back</button><button class="btn soft">Save</button><button class="btn">Next</button></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="v2">
+      <aside class="slide-side">
+        <div class="stage-tag">Vocabulary • Stage 2</div>
+        <h3>Wake the Words Up</h3>
+        <p>Short activation tasks with immediate feedback.</p>
+        <div class="translation-box"><strong>ES:</strong> Haz las actividades y revisa tus respuestas.</div>
+      </aside>
+      <div class="slide-main">
+        <div class="activity-grid three">
+          <div class="game-card">
+            <h4>Match-up race</h4>
+            <div class="match-grid randomize-group">
+              <div class="match-item">team</div><div class="match-item">people who work together</div>
+              <div class="match-item">report</div><div class="match-item">work document</div>
+            </div>
+            <p class="small">Randomize items each load.</p>
+          </div>
+          <div class="game-card">
+            <h4>Find it fast</h4>
+            <div class="pill-bank randomize-group">
+              <span class="word-pill">desk</span><span class="word-pill">screen</span><span class="word-pill">team</span><span class="word-pill">report</span>
+            </div>
+          </div>
+          <div class="game-card">
+            <h4>Retry + XP</h4>
+            <div class="xp-track"><span>Complete 2 tasks</span><strong>+20 XP</strong></div>
+            <div class="btn-row" style="margin-top:12px"><button class="btn soft">Retry</button><button class="btn green">Check</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="v3">
+      <aside class="slide-side">
+        <div class="stage-tag">Vocabulary • Stage 3</div>
+        <h3>Use the New Words</h3>
+        <p>Move from recognition to short controlled output.</p>
+        <div class="translation-box"><strong>ES:</strong> Completa y usa las palabras en frases cortas.</div>
+      </aside>
+      <div class="slide-main">
+        <div class="activity-grid two">
+          <div class="activity-card">
+            <h4>Complete the frame</h4>
+            <div class="sentence-frame">They work in a ______.</div>
+            <div class="pill-bank randomize-group" style="margin-top:12px"><span class="answer-pill">team</span><span class="answer-pill">window</span><span class="answer-pill">music</span></div>
+          </div>
+          <div class="activity-card">
+            <h4>Quick sentence spin</h4>
+            <ul class="task-list">
+              <li>Name 3 things in the image.</li>
+              <li>Say 1 short phrase with each.</li>
+              <li>Save your best answer.</li>
+            </ul>
+            <div class="btn-row"><button class="btn soft">Save</button><button class="btn">Next</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="v4">
+      <aside class="slide-side">
+        <div class="stage-tag">Vocabulary • Stage 4</div>
+        <h3>Choose &amp; Sort</h3>
+        <p>One visual task, one sorting task, one checkpoint.</p>
+        <div class="translation-box"><strong>ES:</strong> Elige la mejor opción y clasifica las palabras.</div>
+      </aside>
+      <div class="slide-main">
+        <div class="activity-grid three">
+          <div class="game-card">
+            <h4>Pick the best word</h4>
+            <div class="choice-list randomize-group">
+              <div class="choice correct">report</div>
+              <div class="choice alt">kitchen</div>
+              <div class="choice">holiday</div>
+            </div>
+          </div>
+          <div class="game-card">
+            <h4>Sort it</h4>
+            <div class="split">
+              <div class="note-card"><h4>People</h4><div class="pill-bank"><span class="word-pill">manager</span><span class="word-pill">team</span></div></div>
+              <div class="note-card"><h4>Things</h4><div class="pill-bank"><span class="word-pill">screen</span><span class="word-pill">report</span></div></div>
+            </div>
+          </div>
+          <div class="game-card">
+            <h4>Checkpoint</h4>
+            <div class="achievement"><span>Badge ready</span><strong>Word Spotter</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="v5">
+      <aside class="slide-side">
+        <div class="stage-tag">Vocabulary • Stage 5</div>
+        <h3>Play the Mini Games</h3>
+        <p>Variety stays, but tighter and cleaner.</p>
+        <div class="translation-box"><strong>ES:</strong> Juega, piensa y prueba otra vez si es necesario.</div>
+      </aside>
+      <div class="slide-main">
+        <div class="activity-grid three">
+          <div class="game-card">
+            <h4>Memory flip</h4>
+            <div class="board randomize-group">
+              <div class="tile">team</div><div class="tile">?</div><div class="tile">report</div><div class="tile">?</div>
+              <div class="tile">desk</div><div class="tile">?</div><div class="tile">manager</div><div class="tile">?</div>
+            </div>
+          </div>
+          <div class="game-card">
+            <h4>Mystery clue</h4>
+            <p>“I read it on my screen. It gives information.”</p>
+            <div class="choice-list randomize-group"><div class="choice correct">report</div><div class="choice">chair</div></div>
+          </div>
+          <div class="game-card">
+            <h4>Speed burst</h4>
+            <div class="timer"><span>Time left</span><strong>30 sec</strong></div>
+            <div class="btn-row" style="margin-top:12px"><button class="btn soft">Retry</button><button class="btn green">Check</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="v6">
+      <aside class="slide-side">
+        <div class="stage-tag">Vocabulary • Stage 6</div>
+        <h3>Build Short Answers</h3>
+        <p>Less circus, more thinking: words and short phrases.</p>
+        <div class="translation-box"><strong>ES:</strong> Escribe una palabra o una frase corta para cada punto.</div>
+      </aside>
+      <div class="slide-main">
+        <div class="activity-grid three">
+          <div class="activity-card">
+            <h4>Write 6 short answers</h4>
+            <ul class="task-list">
+              <li>1 object</li>
+              <li>1 person</li>
+              <li>1 action</li>
+              <li>1 place</li>
+              <li>1 useful phrase</li>
+              <li>1 detail from the image</li>
+            </ul>
+          </div>
+          <div class="feedback-card">
+            <h4>Suggested answers</h4>
+            <details class="suggested">
+              <summary>Open suggested answers</summary>
+              <ul class="task-list">
+                <li>desk</li>
+                <li>manager</li>
+                <li>check a report</li>
+                <li>office</li>
+                <li>work together</li>
+                <li>two people near the screen</li>
+              </ul>
+            </details>
+          </div>
+          <div class="score-card">
+            <h4>Reflection check</h4>
+            <p class="small">Did you write clear words or phrases? Save before moving on.</p>
+            <div class="btn-row"><button class="btn ghost">Back</button><button class="btn soft">Save</button><button class="btn">Next</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="v7">
+      <aside class="slide-side">
+        <div class="stage-tag">Vocabulary • Stage 7</div>
+        <h3>Speak It for Real</h3>
+        <p>Vocabulary ends in spoken production with recording and feedback.</p>
+        <div class="translation-box"><strong>ES:</strong> Graba tu respuesta y revisa la retroalimentación.</div>
+      </aside>
+      <div class="slide-main">
+        <div class="activity-grid two">
+          <div class="activity-card">
+            <h4>Speaking mission</h4>
+            <ul class="task-list">
+              <li>Say 4–5 full sentences about the image or your work day.</li>
+              <li>Use at least 4 target words.</li>
+              <li>Speak clearly and naturally.</li>
+            </ul>
+            <div class="record-box">
+              <div class="record-toolbar"><span>Recorder placeholder</span><strong>00:00 / 01:00</strong></div>
+              <div class="btn-row" style="margin-top:12px"><button class="btn alt">Record</button><button class="btn soft">Stop</button><button class="btn ghost">Play</button></div>
+            </div>
+          </div>
+          <div class="feedback-card">
+            <h4>Feedback panel</h4>
+            <div class="rubric">
+              <div class="rubric-row"><b>Words</b><span>Used 4+ target words</span></div>
+              <div class="rubric-row"><b>Clarity</b><span>Easy to understand</span></div>
+              <div class="rubric-row"><b>Range</b><span>More than isolated words</span></div>
+            </div>
+            <details class="suggested" style="margin-top:12px">
+              <summary>Open suggested answer</summary>
+              <p>In this office, the team works together. The manager checks a report on the screen. Two people talk near the desk. They look busy, but they work well together.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="g1">
+      <aside class="slide-side">
+        <div class="stage-tag">Grammar • Stage 1</div>
+        <h3>Notice the Pattern</h3>
+        <p>Start from examples and let learners spot what repeats.</p>
+        <div class="translation-box"><strong>ES:</strong> Lee o escucha y encuentra el patrón.</div>
+        <div class="audio-box"><button class="btn alt">Audio placeholder • model lines</button></div>
+      </aside>
+      <div class="slide-main">
+        <div class="visual">
+          <div class="image-card">
+            <img src="https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Office team working through daily tasks" />
+            <div class="caption">One image, three model lines, then pattern noticing.</div>
+          </div>
+          <div class="activity-card">
+            <h4>Model lines</h4>
+            <div class="choice-list">
+              <div class="choice">Ana checks the report every morning.</div>
+              <div class="choice">Leo helps the team after lunch.</div>
+              <div class="choice">They finish at five.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="g2">
+      <aside class="slide-side">
+        <div class="stage-tag">Grammar • Stage 2</div>
+        <h3>Sort the Lines</h3>
+        <p>Guided puzzle instead of a lecture.</p>
+        <div class="translation-box"><strong>ES:</strong> Clasifica las frases y busca la diferencia.</div>
+      </aside>
+      <div class="slide-main">
+        <div class="activity-grid two">
+          <div class="game-card">
+            <h4>Two baskets</h4>
+            <div class="split">
+              <div class="note-card"><h4>One person</h4><div class="pill-bank"><span class="word-pill">checks</span><span class="word-pill">helps</span></div></div>
+              <div class="note-card"><h4>More than one person</h4><div class="pill-bank"><span class="word-pill">check</span><span class="word-pill">help</span></div></div>
+            </div>
+          </div>
+          <div class="activity-card">
+            <h4>Spot the best line</h4>
+            <div class="choice-list randomize-group">
+              <div class="choice correct">She checks the schedule.</div>
+              <div class="choice warning">She check the schedule.</div>
+              <div class="choice">She checking the schedule.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="g3">
+      <aside class="slide-side">
+        <div class="stage-tag">Grammar • Stage 3</div>
+        <h3>Use the Frame</h3>
+        <p>Safe support before freer use.</p>
+        <div class="translation-box"><strong>ES:</strong> Completa la estructura con la mejor forma.</div>
+      </aside>
+      <div class="slide-main">
+        <div class="activity-grid three">
+          <div class="activity-card">
+            <h4>Complete the line</h4>
+            <div class="sentence-frame">He ______ the report every day.</div>
+          </div>
+          <div class="activity-card">
+            <h4>Fast tiles</h4>
+            <div class="pill-bank randomize-group"><span class="word-pill">checks</span><span class="word-pill">check</span><span class="word-pill">help</span></div>
+          </div>
+          <div class="score-card">
+            <h4>XP boost</h4>
+            <p>3 correct frames = +15 XP</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="g4">
+      <aside class="slide-side">
+        <div class="stage-tag">Grammar • Stage 4</div>
+        <h3>Choose the Best Fit</h3>
+        <p>Quick checks, light layout, clear feedback.</p>
+        <div class="translation-box"><strong>ES:</strong> Elige la mejor opción y revisa tu respuesta.</div>
+      </aside>
+      <div class="slide-main">
+        <div class="activity-grid two">
+          <div class="game-card">
+            <h4>Choice ladder</h4>
+            <div class="choice-list randomize-group">
+              <div class="choice correct">My team works late on Friday.</div>
+              <div class="choice">My team working late on Friday.</div>
+              <div class="choice warning">My team work late on Friday.</div>
+            </div>
+          </div>
+          <div class="game-card">
+            <h4>Locked door round</h4>
+            <p>Each correct answer opens one door. Three doors = shortcut.</p>
+            <div class="board" style="grid-template-columns:repeat(3,1fr)"><div class="tile">Door 1</div><div class="tile">Door 2</div><div class="tile">Door 3</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="g5">
+      <aside class="slide-side">
+        <div class="stage-tag">Grammar • Stage 5</div>
+        <h3>Fix &amp; Rebuild</h3>
+        <p>Repair and transformation without overload.</p>
+        <div class="translation-box"><strong>ES:</strong> Corrige y vuelve a construir las frases.</div>
+      </aside>
+      <div class="slide-main">
+        <div class="split">
+          <div class="activity-card">
+            <h4>Repair it</h4>
+            <ul class="task-list">
+              <li>She help the team. → <b>She helps the team.</b></li>
+              <li>They checks the plan. → <b>They check the plan.</b></li>
+            </ul>
+          </div>
+          <div class="activity-card">
+            <h4>Rebuild it</h4>
+            <div class="pill-bank randomize-group"><span class="word-pill">Leo</span><span class="word-pill">checks</span><span class="word-pill">the report</span><span class="word-pill">every morning</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="g6">
+      <aside class="slide-side">
+        <div class="stage-tag">Grammar • Stage 6</div>
+        <h3>Build Full Sentences</h3>
+        <p>Grammar gets more cognitive here: write complete lines before the final task.</p>
+        <div class="translation-box"><strong>ES:</strong> Escribe 6 oraciones completas con la estructura.</div>
+      </aside>
+      <div class="slide-main">
+        <div class="activity-grid three">
+          <div class="activity-card">
+            <h4>Write 6 full sentences</h4>
+            <ul class="task-list">
+              <li>1 sentence about one person</li>
+              <li>1 sentence about your team</li>
+              <li>1 sentence about a daily action</li>
+              <li>1 sentence with time</li>
+              <li>1 sentence with place</li>
+              <li>1 sentence about work</li>
+            </ul>
+          </div>
+          <div class="feedback-card">
+            <h4>Suggested answers</h4>
+            <details class="suggested">
+              <summary>Open suggested answers</summary>
+              <ul class="task-list">
+                <li>Ana checks the report every morning.</li>
+                <li>My team works together every day.</li>
+                <li>Leo answers emails after lunch.</li>
+                <li>We finish at five.</li>
+                <li>The manager works in the main office.</li>
+                <li>I organize my tasks before the meeting.</li>
+              </ul>
+            </details>
+          </div>
+          <div class="score-card">
+            <h4>Self-check</h4>
+            <p class="small">Did each line feel complete? Save before the final task.</p>
+            <div class="btn-row"><button class="btn soft">Save</button><button class="btn">Next</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="g7">
+      <aside class="slide-side">
+        <div class="stage-tag">Grammar • Stage 7</div>
+        <h3>Write the Final Message</h3>
+        <p>Grammar ends in guided writing: short professional email or message.</p>
+        <div class="translation-box"><strong>ES:</strong> Escribe un correo o mensaje breve usando la estructura.</div>
+      </aside>
+      <div class="slide-main">
+        <div class="activity-grid two">
+          <div class="activity-card">
+            <h4>Writing mission</h4>
+            <ul class="task-list">
+              <li>Write a short email about your normal work day.</li>
+              <li>Use at least 4 correct present simple sentences.</li>
+              <li>Add a greeting and closing.</li>
+            </ul>
+            <div class="sentence-frame" style="margin-top:12px">Hello [Name],<br><br>I work in...<br>I check...<br>My team...<br>We finish...<br><br>Best,<br>[Name]</div>
+          </div>
+          <div class="feedback-card">
+            <h4>Review + suggested answer</h4>
+            <div class="rubric">
+              <div class="rubric-row"><b>Form</b><span>Greeting, body, closing</span></div>
+              <div class="rubric-row"><b>Accuracy</b><span>Action form fits the subject</span></div>
+              <div class="rubric-row"><b>Meaning</b><span>Clear and natural message</span></div>
+            </div>
+            <details class="suggested" style="margin-top:12px">
+              <summary>Open suggested answer</summary>
+              <p>Hello Marta,<br><br>I work in the main office. I check reports every morning and I answer emails after lunch. My team works together every day, and we finish at five. I like the routine because it helps me stay organized.<br><br>Best,<br>Paula</p>
+            </details>
+            <div class="btn-row" style="margin-top:12px"><button class="btn ghost">Back</button><button class="btn soft">Save</button><button class="btn green">Submit</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="footer-card">
+      <h3 style="margin-top:0">Template notes built into the shell</h3>
+      <ul class="task-list">
+        <li>Keep later stages more cognitive: vocabulary stage 6 = words/phrases, stage 7 = recorded speaking; grammar stage 6 = full sentences, stage 7 = guided writing.</li>
+        <li>Every free production task includes a suggested-answer dropdown.</li>
+        <li>Every stage can carry Back, Next, Save, Retry, Check as needed.</li>
+        <li>Interactive sets marked <b>randomize-group</b> should shuffle items on load in the final functional version.</li>
+        <li>Recording blocks are placeholders for Moodle-compatible recording and feedback tools.</li>
+      </ul>
+    </section>
+  </div>
+
+  <script>
+    function shuffleGroup(group){
+      const items=[...group.children];
+      for(let i=items.length-1;i>0;i--){
+        const j=Math.floor(Math.random()*(i+1));
+        [items[i],items[j]]=[items[j],items[i]];
+      }
+      items.forEach(item=>group.appendChild(item));
+    }
+    document.querySelectorAll('.randomize-group').forEach(shuffleGroup);
+  </script>
+</body>
+</html>
